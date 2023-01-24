@@ -1,7 +1,13 @@
 import css from './Filter.module.css';
 import { PropTypes } from 'prop-types';
-
-const Filter = ({ onChange, value }) => {
+import { setStatusFilter } from 'redux/filterSlice';
+import { useSelector, useDispatch } from 'react-redux';
+const Filter = () => {
+  const dispatch = useDispatch();
+  const filter = useSelector(state => state.filter.status);
+  const handleFilter = e => {
+    dispatch(setStatusFilter(e.currentTarget.value.toLowerCase()));
+  };
   return (
     <>
       <label className={css.title}>
@@ -9,8 +15,8 @@ const Filter = ({ onChange, value }) => {
         <input
           className={css.input}
           type="text"
-          value={value}
-          onChange={onChange}
+          value={filter}
+          onChange={handleFilter}
         />
       </label>
     </>
